@@ -3,17 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width-devise-width, initial-scale-1.0">
-        <link rel="./css/style.css">
+        <link rel="stylesheet" href="./css/style.css">
         <title>Document</title> 
         <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
         <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
         <script>
-            document.querySelector('#playButton').addEventListener('click', function () {
-              const soundEntity = document.querySelector('#musicEntity');
-              soundEntity.components.sound.playSound();
+            window.addEventListener("load", function () {
+              const playButton = document.querySelector('#playButton');
+              const musicEntity = document.querySelector('#musicEntity');
+          
+              playButton.addEventListener('click', function () {
+                const soundComp = musicEntity.components.sound;
+                if (!soundComp.isPlaying) {
+                  soundComp.playSound();
+                }
+              });
+          
+              const stopBox = document.querySelector('#pause');
+              stopBox.addEventListener('click', function () {
+                const soundComp = musicEntity.components.sound;
+                if (soundComp.isPlaying) {
+                  soundComp.stopSound();
+                }
+              });
             });
-            var audio = document.querySelector("#musicEntity");
-          </script>
+        </script>
     </head>
     <body>
         <a-scene>
@@ -23,7 +37,11 @@
                 <img src="./img/paves.jpg" id="paves"/>
                 <img src="./img/bois.jpg" id="bois"/>
                 <img src="./img/tuiles.avif" id="tuiles"/>
+                <img src="./img/pauseBouton.jpg" id="pauseBouton"/>
+                <img src="./img/playBouton.jpg" id="playBouton"/>
                 <img src="./img/Retour_vers_le_futur_Logo.svg.png" id="retourVersLeFutur"/>
+                <img src="./img/Retour_vers_le_futur_affiche.jpg" id="afficheRetourVersLeFutur"/>
+                <video id="bandeAnnonce" loop="false" src="./src/Retour Vers Le Futur – Bande Annonce VF – 1985.mp4"></video>
                 <audio id="music" src="/src/The Back to the Future Theme Tune.mp3" preload="auto"></audio>
             </a-assets>
             
@@ -37,7 +55,8 @@
             </a-entity>
             <a-box color="#f3eebe" position="0 0 -4" scale="2 2 2" ></a-box>
             <a-plane src="#bois" position="0 -0.25 -2.99" scale="1 1.5"></a-plane>
-            <a-plane src="#paves" scale="100 100" rotation="-90 0 0" position="0 -1 0"></a-plane>
+            <a-plane src="#paves" scale="100 100" rotation="-90 0 0" position="0 -1 0" material.repeat="true"></a-plane>
+            <a-plane src="#afficheRetourVersLeFutur" rotation="0 90 0" position="1.01 0 -4" scale="1 1.5"></a-plane>
             <!-- Arbre -->
             <a-cylinder color="#3e1b04" position="-3 0 -5" scale="0.5 2 0.5"></a-cylinder>
             <a-sphere color="#65f811" position="-3 2 -5" scale="1.2 1.2 1.2"></a-sphere>
@@ -45,17 +64,19 @@
             <!--* Audio -->
             <a-plane id="playButton" src="#retourVersLeFutur" scale="3 1" position="-6 0 -3" sound="src: #music; on: click"></a-plane>
             <a-entity id="musicEntity" sound="src: #music; autoplay: false; loop: true"></a-entity>
-
+x
             <!-- Dolorean -->
             <a-asset-item id="dolorean" src="./img/Dolorean.glb"></a-asset-item>
             <a-entity gltf-model="#dolorean" position="-10 -1 -5" scale="1 1 1" event-set__click="position:-16 -1 -5"></a-entity>
-            <a-box color="#00FF00" position="-6 0 -2" onclick="audio.playSound()"></a-box>
             
+            <!--* Video -->
+            <a-plane src="#bandeAnnonce" width="16" height="9" position="10 4 -2"></a-plane>
+            <a-box scale="16.5 9.5 0.1" position="10 4 -2.1" ></a-box>
+            <a-plane src="#pauseBouton" width="1" height="1" position="20 4 -2" onclick="document.querySelector('#bandeAnnonce').pause();"></a-plane>
+            <a-plane src="#playBouton" width="1" height="1" position="20 2.9 -2" onclick="document.querySelector('#bandeAnnonce').play();"></a-plane>
 
             <a-camera><a-cursor></a-cursor></a-camera>
 
         </a-scene>
     </body>
 </html>
-
-<!--animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 6000"-->
