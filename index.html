@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-devise-width, initial-scale-1.0">
+        <link rel="./css/style.css">
+        <title>Document</title> 
+        <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+        <script>
+            document.querySelector('#playButton').addEventListener('click', function () {
+              const soundEntity = document.querySelector('#musicEntity');
+              soundEntity.components.sound.playSound();
+            });
+          </script>
+    </head>
+    <body>
+        <a-scene>
+            <a-assets>
+                <!--* Assets -->
+                <img src="./img/forest.jpg" id="forest"/>
+                <img src="./img/paves.jpg" id="paves"/>
+                <img src="./img/bois.jpg" id="bois"/>
+                <img src="./img/tuiles.avif" id="tuiles"/>
+                <img src="./img/Retour_vers_le_futur_Logo.svg.png" id="retourVersLeFutur"/>
+                <audio id="music" src="/src/The Back to the Future Theme Tune.mp3" preload="auto"></audio>
+            </a-assets>
+            
+            <a-sky src="#forest"></a-sky>
+            <!-- Maison -->
+            <a-entity geometry="primitive: cone; radiusBottom: 1.5; radiusTop: 0; height: 2; segmentsRadial: 4"
+                material="color: #FF0022"
+                position="0 2 -4"
+                rotation="0 45 0"
+                event-set__click="material.src: #tuiles; material.color: #ea3f19;">
+            </a-entity>
+            <a-box color="#f3eebe" position="0 0 -4" scale="2 2 2" ></a-box>
+            <a-plane src="#bois" position="0 -0.25 -2.99" scale="1 1.5"></a-plane>
+            <a-plane src="#paves" scale="100 100" rotation="-90 0 0" position="0 -1 0"></a-plane>
+            <!-- Arbre -->
+            <a-cylinder color="#3e1b04" position="-3 0 -5" scale="0.5 2 0.5"></a-cylinder>
+            <a-sphere color="#65f811" position="-3 2 -5" scale="1.2 1.2 1.2"></a-sphere>
+
+            <!--* Audio -->
+            <a-plane id="playButton" src="#retourVersLeFutur" scale="3 1" position="-6 0 -3"></a-plane>
+            <a-entity id="musicEntity" sound="src: #music; autoplay: false; loop: true"></a-entity>
+
+            <!--  -->
+            
+
+            <a-camera><a-cursor></a-cursor></a-camera>
+
+        </a-scene>
+    </body>
+</html>
+
+<!--animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 6000"-->
