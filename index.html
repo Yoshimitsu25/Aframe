@@ -12,6 +12,7 @@
               const soundEntity = document.querySelector('#musicEntity');
               soundEntity.components.sound.playSound();
             });
+            var audio = document.querySelector("#musicEntity");
           </script>
     </head>
     <body>
@@ -42,10 +43,13 @@
             <a-sphere color="#65f811" position="-3 2 -5" scale="1.2 1.2 1.2"></a-sphere>
 
             <!--* Audio -->
-            <a-plane id="playButton" src="#retourVersLeFutur" scale="3 1" position="-6 0 -3"></a-plane>
+            <a-plane id="playButton" src="#retourVersLeFutur" scale="3 1" position="-6 0 -3" sound="src: #music; on: click"></a-plane>
             <a-entity id="musicEntity" sound="src: #music; autoplay: false; loop: true"></a-entity>
 
-            <!--  -->
+            <!-- Dolorean -->
+            <a-asset-item id="dolorean" src="./img/Dolorean.glb"></a-asset-item>
+            <a-entity gltf-model="#dolorean" position="-10 -1 -5" scale="1 1 1" event-set__click="position:-16 -1 -5"></a-entity>
+            <a-box color="#00FF00" position="-6 0 -2" onclick="audio.playSound()"></a-box>
             
 
             <a-camera><a-cursor></a-cursor></a-camera>
